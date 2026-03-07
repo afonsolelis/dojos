@@ -107,7 +107,8 @@
 
                 <section>
                     <h3>O Problema</h3>
-                    <p>Dada uma lista de números inteiros, descubra se há algum número duplicado. Retorne <code>true</code> se houver duplicidade ou <code>false</code> caso não haja.</p>
+                    <p style="font-size: 0.8em; color: #f1fa8c;"><b>Contexto (Uber/Pagamentos):</b> Você está trabalhando em um sistema de processamento de pagamentos em larga escala. Antes de processar um lote de transações, você precisa garantir que não há IDs de transação duplicados, o que poderia levar a cobranças duplas. Sua tarefa é criar uma função que verifique essa condição de forma eficiente.</p>
+                    <p>Dado um array de IDs de transação (números inteiros), retorne <code>true</code> se houver duplicidade ou <code>false</code> caso contrário.</p>
                     <pre><code data-trim data-noescape class="language-javascript">
 // Exemplos:
 temDuplicado([1, 2, 3, 1]) // Retorna: true
@@ -166,7 +167,8 @@ temDuplicado([1, 2, 3, 4]) // Retorna: false
 
                 <section>
                     <h3>O Problema</h3>
-                    <p>Dado um array de inteiros e um valor alvo (<code>target</code>), retorne os elementos (ou índices) dos dois números que somados dão o alvo.</p>
+                    <p style="font-size: 0.8em; color: #f1fa8c;"><b>Contexto (Uber/Transporte):</b> Você trabalha na Uber e precisa desenvolver uma funcionalidade para o sistema de corridas compartilhadas (Uber Pool). Para otimizar o agrupamento de passageiros, o sistema precisa encontrar duas corridas na mesma rota cujo valor somado seja exatamente o que um cliente promocional pagaria.</p>
+                    <p>Dado um array de preços de corridas (inteiros) e um valor alvo (<code>target</code>), retorne os <b>elementos</b> (ou <b>índices</b>) das duas corridas que somam o alvo.</p>
                     <pre><code data-trim data-noescape class="language-javascript">
 // Exemplos:
 twoSum([2, 7, 11, 15], 9) 
@@ -217,7 +219,8 @@ Verificamos se o "complemento" já passou no Histórico (Map/Obj).
 
                 <section>
                     <h3>O Problema</h3>
-                    <p>Dadas duas strings (palavras/frases), crie uma função que retorne <code>true</code> caso uma seja anagrama da outra (mesmas letras em ordem diferente).</p>
+                    <p style="font-size: 0.8em; color: #f1fa8c;"><b>Contexto (Google/Busca):</b> Você está na equipe de busca do Google. Para melhorar os resultados, o motor precisa agrupar palavras que são anagramas (ex: "ator", "rota", "tora"). Isso ajuda a entender a intenção do usuário mesmo que ele digite as letras fora de ordem. Sua tarefa é criar o núcleo dessa lógica.</p>
+                    <p>Dadas duas strings, retorne <code>true</code> se uma for um anagrama da outra.</p>
                     <pre><code data-trim data-noescape class="language-javascript">
 // Exemplos:
 isAnagram("padre", "pedra") // true
