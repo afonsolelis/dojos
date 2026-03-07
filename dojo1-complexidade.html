@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Dojo 01 - Complexidade de Algoritmo</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <!-- Tema Escuro e Tecnológico -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/dracula.min.css" id="theme">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/monokai.min.css" id="highlight-theme">
+    
+    <style>
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            color: #bd93f9;
+        }
+        .reveal h1 { font-size: 2.3em; }
+        .reveal h2 { font-size: 1.7em; color: #8be9fd; line-height: 1.2; }
+        .reveal h3 { font-size: 1.3em; color: #50fa7b; }
+        .reveal p, .reveal li { font-size: 0.9em; line-height: 1.4; text-align: left; }
+        .reveal .center-text p { text-align: center; }
+        
+        .reveal pre {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            width: 95%;
+            margin: 10px auto;
+            font-size: 0.6em;
+        }
+        
+        .table-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .reveal table {
+            font-size: 0.65em;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        .reveal table th {
+            color: #ff79c6;
+            border-bottom: 2px solid #6272a4;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .reveal table td {
+            border-bottom: 1px solid #44475a;
+            padding: 10px;
+        }
+        
+        .highlight-text {
+            color: #ffb86c;
+            font-weight: bold;
+        }
+        
+        .driver-action {
+            color: #ff5555;
+            font-weight: bold;
+            font-size: 1em;
+            text-align: center;
+            margin-top: 1rem;
+            padding: 10px;
+            border: 2px dashed #ff5555;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Capa -->
+            <section class="center-text">
+                <h1>Coding Dojo #01</h1>
+                <h2>Complexidade de Algoritmos (Big O)</h2>
+                <p>Neste dojo, não basta a solução funcionar. <br>Ela precisa ser rápida e escalável.</p>
+            </section>
+
+            <!-- Regras Rápidas -->
+            <section>
+                <h2>Lembrete: Formato Randori</h2>
+                <p>Como vamos trabalhar hoje?</p>
+                <ul>
+                    <li class="fragment"><strong>Apenas UM Driver:</strong> Ele não pensa a lógica, apenas digita o código (escuta a plateia).</li>
+                    <li class="fragment"><strong>A Plateia Pensa:</strong> Discutam as ideias em voz alta. Pensem coletivamente na eficiência.</li>
+                    <li class="fragment"><strong>Rotação (3-5 min):</strong> Tocou o timer, o Driver sai. Um novo Driver assume imediatamente o continuamento da lógica.</li>
+                    <li class="fragment"><strong>Errar faz parte:</strong> O código não precisa rodar de primeira.</li>
+                </ul>
+            </section>
+
+            <!-- Round 1 -->
+            <section>
+                <section class="center-text">
+                    <h2>Round 1</h2>
+                    <h3>Encontrando Duplicados</h3>
+                </section>
+
+                <section>
+                    <h3>O Problema</h3>
+                    <p>Dada uma lista de números inteiros, descubra se há algum número duplicado. Retorne <code>true</code> se houver duplicidade ou <code>false</code> caso não haja.</p>
+                    <pre><code data-trim data-noescape class="language-javascript">
+// Exemplos:
+temDuplicado([1, 2, 3, 1]) // Retorna: true
+temDuplicado([1, 2, 3, 4]) // Retorna: false
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Fase 1: A Força Bruta</h3>
+                    <p><strong>Plateia:</strong> Qual a primeira ideia que vem à mente para garantir que encontramos um par duplicado?</p>
+                    <p class="fragment highlight-text">Dica: Compare todos os elementos uns com os outros.</p>
+                    <div class="fragment driver-action">
+                        💻 DRIVER 1: Vá para o teclado! Implemente a solução de Força Bruta.
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Intervenção / Análise</h3>
+                    <p><strong>Professor:</strong> Olhem para os loops. Qual a complexidade dessa solução inicial?</p>
+                    <ul>
+                        <li class="fragment">Quantas iterações temos para N elementos?</li>
+                        <li class="fragment highlight-text">Complexidade de Tempo: O(n²) 🐢</li>
+                        <li class="fragment">Qual a Complexidade de Espaço? (Criamos variáveis extras baseadas em N?)</li>
+                        <li class="fragment highlight-text">Complexidade de Espaço: O(1) 🚀</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Fase 2: Otimização (Trade-off)</h3>
+                    <p><strong>Professor:</strong> "Isso vai estourar o limite de tempo (Time Limit Exceeded) em grandes volumes."</p>
+                    <p class="fragment">Como resolver em <strong>Tempo O(n)</strong>?</p>
+                    <p class="fragment highlight-text">Plateia: Podemos gastar memória ("sacrificar Espaço") para ganhar processamento!</p>
+                    <div class="fragment driver-action">
+                        ⏱️ DRIVER 2: Vá pro teclado! Altere a solução focado em O(n) iterando apenas 1 vez (Use Hash Set ou Mapa).
+                    </div>
+                </section>
+                
+                <section>
+                    <h3>Análise da Otimização</h3>
+                    <ul>
+                        <li>O array é iterado paralelamente (uma única vez): <strong>Tempo O(n)</strong>.</li>
+                        <li>A busca em um Set (conjunto) é imediata: <strong>O(1)</strong> médio.</li>
+                        <li>Mas armazenamos os elementos vistos: <strong>Espaço O(n)</strong>.</li>
+                    </ul>
+                    <p class="fragment highlight-text">Evolução: O(n²) ➡️ O(n)</p>
+                </section>
+            </section>
+
+            <!-- Round 2 -->
+            <section>
+                <section class="center-text">
+                    <h2>Round 2</h2>
+                    <h3>Two Sum (Alvo da Soma)</h3>
+                    <p class="highlight-text">Problema clássico utilizado na triagem técnica de Big Techs (Amazon, Uber).</p>
+                </section>
+
+                <section>
+                    <h3>O Problema</h3>
+                    <p>Dado um array de inteiros e um valor alvo (<code>target</code>), retorne os elementos (ou índices) dos dois números que somados dão o alvo.</p>
+                    <pre><code data-trim data-noescape class="language-javascript">
+// Exemplos:
+twoSum([2, 7, 11, 15], 9) 
+// Retorna [2, 7], pois 2+7=9
+
+twoSum([3, 2, 4], 6) 
+// Retorna [2, 4], pois 2+4=6
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Fase 1: Solução Inicial</h3>
+                    <p><strong>Plateia:</strong> Guiar o driver com a estratégia mais segura (ainda que mais lenta).</p>
+                    <p class="fragment">Sim, estamos falando de dois loops aninhados novamente.</p>
+                    <div class="fragment driver-action">
+                        🔁 DRIVER 3: Implemente a primeira versão combinatória!
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Análise Fria</h3>
+                    <p><strong>Professor:</strong> Numa entrevista real da Uber, a solução de O(n²) é esperada nos primeiros 10 minutos, e então vem a pergunta:</p>
+                    <blockquote class="fragment" style="border-left: 4px solid #ff79c6; padding-left: 15px; background: #282a36; font-style: italic;">
+                        "Excelente. Mas e se o array tiver 1 milhão de usuários? Você tem como fazer isso em O(n)?"
+                    </blockquote>
+                </section>
+
+                <section>
+                    <h3>Fase 2: A Sacada Algorítmica</h3>
+                    <p>Ao invés de perguntar "quem na frente soma com meu número atual?", faça a pergunta reversa:</p>
+                    <p class="fragment highlight-text">Qual o COMPLEMENTO que me falta para chegar no Target?</p>
+                    <pre class="fragment"><code data-trim data-noescape class="language-javascript">
+complemento = target - numeroAtual;
+Verificamos se o "complemento" já passou no Histórico (Map/Obj).
+                    </code></pre>
+                    <div class="fragment driver-action">
+                        ⚡ DRIVER 4: Troca de guarda! Implemente refatorando pra O(n) utilizando memória auxiliar.
+                    </div>
+                </section>
+            </section>
+
+            <!-- Round 3 -->
+            <section>
+                <section class="center-text">
+                    <h2>Round 3</h2>
+                    <h3>Anagramas Válidos</h3>
+                </section>
+
+                <section>
+                    <h3>O Problema</h3>
+                    <p>Dadas duas strings (palavras/frases), crie uma função que retorne <code>true</code> caso uma seja anagrama da outra (mesmas letras em ordem diferente).</p>
+                    <pre><code data-trim data-noescape class="language-javascript">
+// Exemplos:
+isAnagram("padre", "pedra") // true
+isAnagram("banco", "cabos") // false
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Fase 1: Usando funções da linguagem</h3>
+                    <p><strong>Plateia:</strong> Dá pra fazer numa linha só?</p>
+                    <p class="fragment">Quebre as strings, ordene (<code>sort</code>), depois una (<code>join</code>) e verifique igualdade!</p>
+                    <div class="fragment driver-action">
+                        🧹 DRIVER 5: Deixe a linguagem trabalhar por nós! (Implementem com Sort).
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Análise do Sort()</h3>
+                    <p><strong>Professor:</strong> O código está muito limpo! Mas qual a complexidade algorítmica oculta na função <code>.sort()</code>?</p>
+                    <p class="fragment highlight-text">Maioria das linguagens usa QuickSort, MergeSort ou TimSort: O(n log n).</p>
+                    <p class="fragment">Isso é ótimo, mas O(n) ganha de O(n log n). Como fazemos em O(n)?</p>
+                </section>
+
+                <section>
+                    <h3>Fase 2: Contagem de Frequência</h3>
+                    <p><strong>Plateia:</strong> Não podemos ordenar. Temos que contar as ocorrências de caracteres.</p>
+                    <p class="fragment">Dica: Podemos usar Mapa de Frequência, ou até um simples Array de 26 posições (alfabeto) para somar e subtrair ocorrências.</p>
+                    <div class="fragment driver-action">
+                        🛠️ DRIVER 6: Hora de finalizar com maestria e processamento O(n)!
+                    </div>
+                </section>
+            </section>
+
+            <!-- Fechamento / Resumo -->
+            <section>
+                <section>
+                    <h2>Resumo da Aula</h2>
+                    <p>Big O Cheat Sheet</p>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Notação</th>
+                                    <th>Nome</th>
+                                    <th>Exemplo Clássico</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="highlight-text">O(1)</td>
+                                    <td>Constante</td>
+                                    <td>Acesso de índice de Array, Busca em HashMap</td>
+                                </tr>
+                                <tr>
+                                    <td class="highlight-text">O(log n)</td>
+                                    <td>Logarítmica</td>
+                                    <td>Busca Binária (Binary Search)</td>
+                                </tr>
+                                <tr>
+                                    <td class="highlight-text">O(n)</td>
+                                    <td>Linear</td>
+                                    <td>Um único loop percorrendo um Array</td>
+                                </tr>
+                                <tr>
+                                    <td class="highlight-text">O(n log n)</td>
+                                    <td>Log Linear</td>
+                                    <td>Algoritmos de Ordenação eficientes (MergeSort)</td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #ff5555; font-weight: bold;">O(n²)</td>
+                                    <td>Quadrática</td>
+                                    <td>Loops aninhados (for dentro de for)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="center-text">
+                    <h2>Fim do Dojo!</h2>
+                    <p>Hoje vocês não apenas escreveram código em grupo, mas atuaram discutindo <strong>engenharia e performance (Trade-offs)</strong> como é feito na vida real nas maiores empresas do mundo!</p>
+                </section>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            controls: true,
+            progress: true,
+            center: true,
+            margin: 0.15,
+            width: 1024,
+            height: 768,
+            transition: 'slide', // none/fade/slide/convex/concave/zoom
+            plugins: [ RevealHighlight ]
+        });
+    </script>
+</body>
+</html>
