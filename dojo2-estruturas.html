@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Dojo 02 - Estruturas de Dados (Árvores e Grafos)</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/dracula.min.css" id="theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/monokai.min.css" id="highlight-theme">
+    
+    <style>
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; color: #bd93f9; }
+        .reveal h1 { font-size: 2.3em; }
+        .reveal h2 { font-size: 1.7em; color: #8be9fd; line-height: 1.2; }
+        .reveal h3 { font-size: 1.3em; color: #50fa7b; }
+        .reveal p, .reveal li { font-size: 0.9em; line-height: 1.4; text-align: left; }
+        .reveal .center-text p { text-align: center; }
+        .reveal pre { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); border-radius: 8px; width: 95%; margin: 10px auto; font-size: 0.6em; }
+        .highlight-text { color: #ffb86c; font-weight: bold; }
+        .driver-action { color: #ff5555; font-weight: bold; font-size: 1em; text-align: center; margin-top: 1rem; padding: 10px; border: 2px dashed #ff5555; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="center-text">
+                <h1>Coding Dojo #02</h1>
+                <h2>Busca, Árvores e Zig!</h2>
+                <p>Explorando estruturas não-lineares e uma nova linguagem moderna.</p>
+            </section>
+
+            <!-- Zig vs C Section -->
+            <section>
+                <section>
+                    <h2>O que é Zig?</h2>
+                    <p>Uma linguagem de programação moderna de baixo nível, projetada para substituir o C.</p>
+                    <p class="highlight-text">"O sucessor espiritual do C"</p>
+                </section>
+                
+                <section>
+                    <h3>Zig vs C: Principais Diferenças</h3>
+                    <ul>
+                        <li class="fragment"><strong>Sem Fluxo Oculto:</strong> No Zig, não há pré-processador ou macros complexas. O que você lê é o que o processador executa.</li>
+                        <li class="fragment"><strong>Gerenciamento de Memória:</strong> Introduz o <code>defer</code> para garantir que a memória seja liberada sem erros.</li>
+                        <li class="fragment"><strong>Segurança:</strong> O compilador detecta estouros de array e erros de lógica em modo Debug.</li>
+                        <li class="fragment"><strong>Erros Explícitos:</strong> O tratamento de erro é obrigatório, usando o comando <code>try</code>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Por que usar no Dojo?</h3>
+                    <p>O Zig nos obriga a pensar em cada detalhe (alocação, erros, limites) de forma muito mais clara que o C tradicional.</p>
+                    <div class="driver-action">
+                        🚀 Vamos aprender uma estrutura de dados e uma linguagem nova ao mesmo tempo!
+                    </div>
+                </section>
+            </section>
+
+            <section>
+                <h2>O Desafio: Árvores Binárias</h2>
+                <ul>
+                    <li class="fragment"><strong>Árvores:</strong> Hierarquia (Pai -> Filhos).</li>
+                    <li class="fragment"><strong>Zig Syntax:</strong> <code>struct</code>, <code>optional types</code> e <code>allocators</code>.</li>
+                    <li class="fragment highlight-text">Como percorrer tudo com segurança de memória?</li>
+                </ul>
+            </section>
+
+            <!-- Round 1: Árvores -->
+            <section>
+                <section class="center-text">
+                    <h2>Round 1</h2>
+                    <h3>Busca em Árvore Binária (BFS vs DFS)</h3>
+                </section>
+
+                <section>
+                    <h3>O Problema</h3>
+                    <p style="font-size: 0.8em; color: #f1fa8c;"><b>Contexto (File System):</b> Você está criando um buscador de arquivos. As pastas são nós e os arquivos/subpastas são filhos. Você precisa encontrar se um arquivo específico existe na hierarquia.</p>
+                    <p>Dada a raiz de uma Árvore Binária, verifique se um valor <code>X</code> existe nela.</p>
+                </section>
+
+                <section>
+                    <h3>Estratégia 1: DFS (Deep First)</h3>
+                    <p><strong>Plateia:</strong> Vamos descer o máximo possível em um ramo antes de retroceder (Recursão!).</p>
+                    <div class="fragment driver-action">
+                        💻 DRIVER 1: Vá para o teclado! Implemente a busca usando Recursão (DFS).
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Estratégia 2: BFS (Breadth First)</h3>
+                    <p><strong>Plateia:</strong> E se quisermos buscar nível por nível? (Primeiro os vizinhos próximos).</p>
+                    <p class="highlight-text">Dica: Use uma FILA (Queue).</p>
+                    <div class="fragment driver-action">
+                        💻 DRIVER 2: Implemente a busca usando uma Fila (Iterativo - BFS).
+                    </div>
+                </section>
+            </section>
+
+            <!-- Round 2: Grafos -->
+            <section>
+                <section class="center-text">
+                    <h2>Round 2</h2>
+                    <h3>Caminho em Grafos (Rede Social)</h3>
+                </section>
+
+                <section>
+                    <h3>O Problema</h3>
+                    <p style="font-size: 0.8em; color: #f1fa8c;"><b>Contexto (LinkedIn):</b> Você precisa saber se o Usuário A está conectado ao Usuário B (mesmo que por amigos de amigos).</p>
+                    <p>Dado um Grafo (Lista de Adjacência), retorne se existe um caminho entre dois nós.</p>
+                </section>
+
+                <section>
+                    <h3>O Perigo dos Ciclos</h3>
+                    <p><strong>Professor:</strong> Diferente de árvores, grafos podem ter ciclos (A -> B -> C -> A).</p>
+                    <p class="fragment highlight-text">Como evitar que o Driver entre em loop infinito?</p>
+                    <p class="fragment">Plateia: Precisamos de um <code>Set</code> de "Visitados"!</p>
+                    <div class="fragment driver-action">
+                        ⚡ DRIVER 3: Implemente a busca em Grafo garantindo que não visitamos o mesmo nó duas vezes.
+                    </div>
+                </section>
+            </section>
+
+            <section class="center-text">
+                <h2>Fim do Dojo #02!</h2>
+                <p>Vocês agora dominam a base da navegação em estruturas complexas.</p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            plugins: [ RevealHighlight ]
+        });
+    </script>
+</body>
+</html>
