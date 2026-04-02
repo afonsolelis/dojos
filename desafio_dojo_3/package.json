@@ -1,0 +1,13 @@
+{
+  "name": "desafio-dojo-3",
+  "version": "1.0.0",
+  "description": "Coding Dojo #03 - Algoritmos de String, Recursão e Backtracking (TypeScript)",
+  "main": "src/main.ts",
+  "scripts": {
+    "start": "npx tsx src/main.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "tsx": "^4.7.0"
+  }
+}

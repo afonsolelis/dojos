@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Dojo 03 - Algoritmos de String, Recursão e Backtracking</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/dracula.min.css" id="theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/monokai.min.css" id="highlight-theme">
+
+    <style>
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; color: #bd93f9; }
+        .reveal h1 { font-size: 2.3em; }
+        .reveal h2 { font-size: 1.7em; color: #8be9fd; line-height: 1.2; }
+        .reveal h3 { font-size: 1.3em; color: #50fa7b; }
+        .reveal p, .reveal li { font-size: 0.9em; line-height: 1.4; text-align: left; }
+        .reveal .center-text p { text-align: center; }
+        .reveal pre { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); border-radius: 8px; width: 95%; margin: 10px auto; font-size: 0.6em; }
+        .highlight-text { color: #ffb86c; font-weight: bold; }
+        .driver-action { color: #ff5555; font-weight: bold; font-size: 1em; text-align: center; margin-top: 1rem; padding: 10px; border: 2px dashed #ff5555; border-radius: 8px; }
+        .reveal table { font-size: 0.65em; border-collapse: collapse; width: 100%; }
+        .reveal table th { color: #ff79c6; border-bottom: 2px solid #6272a4; padding: 10px; text-align: left; }
+        .reveal table td { border-bottom: 1px solid #44475a; padding: 10px; }
+        .table-container { display: flex; justify-content: center; width: 100%; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Capa -->
+            <section class="center-text">
+                <h1>Coding Dojo #03</h1>
+                <h2>Strings, Recursão e Backtracking</h2>
+                <p>Hoje vamos desmontar strings, pensar recursivamente<br>e resolver problemas "impossíveis" com backtracking.</p>
+                <p class="highlight-text">Linguagem: TypeScript</p>
+            </section>
+
+            <!-- Regras -->
+            <section>
+                <h2>Lembrete: Formato Randori</h2>
+                <p>Como vamos trabalhar hoje?</p>
+                <ul>
+                    <li class="fragment"><strong>Apenas UM Driver:</strong> Ele não pensa a lógica, apenas digita o código (escuta a plateia).</li>
+                    <li class="fragment"><strong>A Plateia Pensa:</strong> Discutam as ideias em voz alta. Pensem coletivamente.</li>
+                    <li class="fragment"><strong>Rotação (3-5 min):</strong> Tocou o timer, o Driver sai. Um novo Driver assume imediatamente.</li>
+                    <li class="fragment"><strong>Errar faz parte:</strong> O código não precisa rodar de primeira.</li>
+                </ul>
+            </section>
+
+            <!-- Conceito: Recursão -->
+            <section>
+                <section>
+                    <h2>O que é Recursão?</h2>
+                    <p>Uma função que chama a si mesma para resolver subproblemas menores.</p>
+                    <p class="highlight-text">Toda recursão precisa de: caso base + chamada recursiva</p>
+                </section>
+
+                <section>
+                    <h3>Anatomia de uma Função Recursiva</h3>
+                    <pre><code data-trim data-noescape class="language-typescript">
+function fatorial(n: number): number {
+    // Caso base: quando parar
+    if (n <= 1) return 1;
+
+    // Chamada recursiva: problema menor
+    return n * fatorial(n - 1);
+}
+// fatorial(4) -> 4 * fatorial(3) -> 4 * 3 * fatorial(2)
+// -> 4 * 3 * 2 * fatorial(1) -> 4 * 3 * 2 * 1 = 24
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>E o que é Backtracking?</h3>
+                    <p>Uma técnica de recursão onde <strong>tentamos uma escolha</strong>, avançamos, e se chegarmos a um beco sem saída, <strong>voltamos atrás</strong> e tentamos outra opção.</p>
+                    <p class="fragment highlight-text">Pense em um labirinto: avance, se bateu na parede, volte e tente outro caminho.</p>
+                </section>
+
+                <section>
+                    <h3>Padrão de Backtracking</h3>
+                    <pre><code data-trim data-noescape class="language-typescript">
+function backtrack(caminho: string[], opcoes: string[]) {
+    if (condicaoDeSaida(caminho)) {
+        resultados.push([...caminho]);
+        return;
+    }
+
+    for (const opcao of opcoes) {
+        caminho.push(opcao);       // Escolha
+        backtrack(caminho, opcoes); // Explore
+        caminho.pop();             // Desfaça (backtrack!)
+    }
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Por que TypeScript -->
+            <section>
+                <section>
+                    <h2>Por que TypeScript?</h2>
+                    <ul>
+                        <li class="fragment"><strong>Tipagem Estática:</strong> O compilador nos avisa dos erros antes de rodar.</li>
+                        <li class="fragment"><strong>Indústria:</strong> Usado por Google, Microsoft, Airbnb, Stripe e praticamente todo projeto frontend moderno.</li>
+                        <li class="fragment"><strong>Superset de JS:</strong> Tudo que funciona em JavaScript funciona em TypeScript, com segurança extra.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Diferenças-chave do JavaScript</h3>
+                    <pre><code data-trim data-noescape class="language-typescript">
+// Tipos explícitos
+function soma(a: number, b: number): number {
+    return a + b;
+}
+
+// Interfaces
+interface Resultado {
+    valor: string;
+    valido: boolean;
+}
+
+// Generics
+function primeiro&lt;T&gt;(arr: T[]): T | undefined {
+    return arr[0];
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Round 1: Palíndromo -->
+            <section>
+                <section class="center-text">
+                    <h2>Round 1</h2>
+                    <h3>Verificador de Palíndromo Recursivo</h3>
+                </section>
+
+                <section>
+                    <h3>O Problema</h3>
+                    <p style="font-size: 0.8em; color: #f1fa8c;"><b>Contexto (Spotify/Playlists):</b> Você trabalha no Spotify e o time de produto quer criar uma feature divertida: identificar nomes de playlists que são palíndromos (lêem-se igual de trás pra frente). Sua tarefa é criar o algoritmo central.</p>
+                    <p>Dada uma string, retorne <code>true</code> se ela for um palíndromo, ignorando espaços e diferenças de maiúscula/minúscula.</p>
+                    <pre><code data-trim data-noescape class="language-typescript">
+// Exemplos:
+isPalindrome("arara")         // true
+isPalindrome("Ame a Ema")     // true
+isPalindrome("typescript")    // false
+isPalindrome("Socorram me subi no onibus em Marrocos")  // true
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Fase 1: Solução Iterativa (Two Pointers)</h3>
+                    <p><strong>Plateia:</strong> Qual a estratégia mais direta? Dois ponteiros, um do início e outro do fim, caminhando ao centro.</p>
+                    <div class="fragment driver-action">
+                        💻 DRIVER 1: Implemente a versão iterativa com dois ponteiros!
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Análise</h3>
+                    <ul>
+                        <li class="fragment"><strong>Tempo:</strong> O(n) - percorremos metade da string.</li>
+                        <li class="fragment"><strong>Espaço:</strong> O(1) - apenas dois índices.</li>
+                    </ul>
+                    <p class="fragment">Agora, como transformar isso em recursão?</p>
+                </section>
+
+                <section>
+                    <h3>Fase 2: Versão Recursiva</h3>
+                    <p><strong>Plateia:</strong> Qual o caso base? Qual a chamada recursiva?</p>
+                    <ul>
+                        <li class="fragment"><strong>Caso base:</strong> Se os ponteiros se cruzaram, é palíndromo.</li>
+                        <li class="fragment"><strong>Passo:</strong> Se chars são iguais, verifique o subproblema interno.</li>
+                    </ul>
+                    <div class="fragment driver-action">
+                        🔁 DRIVER 2: Refatore para uma solução recursiva pura (sem loops)!
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Comparação</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr><th>Abordagem</th><th>Tempo</th><th>Espaço</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Iterativa (two pointers)</td><td class="highlight-text">O(n)</td><td class="highlight-text">O(1)</td></tr>
+                                <tr><td>Recursiva</td><td class="highlight-text">O(n)</td><td style="color: #ff5555;">O(n) - call stack</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="fragment highlight-text">Trade-off: Recursão é elegante mas usa mais memória (pilha de chamadas).</p>
+                </section>
+            </section>
+
+            <!-- Round 2: Gerador de Parênteses -->
+            <section>
+                <section class="center-text">
+                    <h2>Round 2</h2>
+                    <h3>Gerador de Parênteses Válidos</h3>
+                    <p class="highlight-text">Problema clássico de entrevistas (Google, Meta, Amazon).</p>
+                </section>
+
+                <section>
+                    <h3>O Problema</h3>
+                    <p style="font-size: 0.8em; color: #f1fa8c;"><b>Contexto (Compilador):</b> Você está construindo um parser de expressões para um compilador. Precisa gerar todas as combinações válidas de parênteses para validar a gramática. Cada combinação representa uma estrutura de aninhamento diferente.</p>
+                    <p>Dado um número <code>n</code>, gere todas as combinações válidas de <code>n</code> pares de parênteses.</p>
+                    <pre><code data-trim data-noescape class="language-typescript">
+// Exemplos:
+generateParentheses(1) // ["()"]
+generateParentheses(2) // ["(())", "()()"]
+generateParentheses(3) // ["((()))", "(()())", "(())()",
+                        //  "()(())", "()()()"]
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Pensando no Backtracking</h3>
+                    <p><strong>Professor:</strong> Quais são as regras para parênteses válidos?</p>
+                    <ul>
+                        <li class="fragment">Podemos abrir <code>(</code> se ainda temos parênteses de abertura restantes.</li>
+                        <li class="fragment">Podemos fechar <code>)</code> <strong>somente</strong> se o número de fechamentos for menor que o de aberturas.</li>
+                        <li class="fragment highlight-text">Caso base: quando usamos todos os n pares.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Visualizando a Árvore de Decisão</h3>
+                    <pre><code data-trim data-noescape class="language-text">
+                    ""
+                   /
+                  "("
+                 /    \
+              "(("    "()"
+              /  \       \
+           "(()" "(()   "()()"  <-- resultado!
+            |       ...
+          "(())"  <-- resultado!
+                    </code></pre>
+                    <p class="fragment">Cada nó é uma <strong>escolha</strong>: abrir ou fechar. Backtracking poda os caminhos inválidos.</p>
+                </section>
+
+                <section>
+                    <h3>Hora de Codar!</h3>
+                    <p><strong>Plateia:</strong> Guiem o Driver. Precisamos de:</p>
+                    <ul>
+                        <li class="fragment">Uma função recursiva com parâmetros: string atual, contagem de aberturas, contagem de fechamentos.</li>
+                        <li class="fragment">Duas decisões por chamada: adicionar <code>(</code> ou <code>)</code>.</li>
+                        <li class="fragment">Condições de poda para evitar caminhos inválidos.</li>
+                    </ul>
+                    <div class="fragment driver-action">
+                        ⚡ DRIVER 3: Implemente o gerador de parênteses usando backtracking!
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Análise da Complexidade</h3>
+                    <ul>
+                        <li><strong>Tempo:</strong> O(4^n / sqrt(n)) - número de Catalan.</li>
+                        <li><strong>Espaço:</strong> O(n) - profundidade da recursão.</li>
+                    </ul>
+                    <p class="fragment highlight-text">Este é um problema onde NÃO existe solução polinomial simples. Backtracking é a abordagem correta!</p>
+                </section>
+            </section>
+
+            <!-- Round 3: Permutações -->
+            <section>
+                <section class="center-text">
+                    <h2>Round 3</h2>
+                    <h3>Permutações de String</h3>
+                </section>
+
+                <section>
+                    <h3>O Problema</h3>
+                    <p style="font-size: 0.8em; color: #f1fa8c;"><b>Contexto (Segurança/Criptografia):</b> Você está em uma equipe de segurança e precisa gerar todas as permutações possíveis de uma chave parcial para um teste de força bruta controlado. Entender como gerar permutações é fundamental para compreender a complexidade de ataques criptográficos.</p>
+                    <p>Dada uma string, gere todas as permutações possíveis dos seus caracteres (sem repetição).</p>
+                    <pre><code data-trim data-noescape class="language-typescript">
+// Exemplos:
+permutations("ab")  // ["ab", "ba"]
+permutations("abc") // ["abc", "acb", "bac", "bca",
+                     //  "cab", "cba"]
+// Para n caracteres: n! permutações
+// 3! = 6, 4! = 24, 5! = 120...
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>A Estratégia: Backtracking com "Usados"</h3>
+                    <p><strong>Professor:</strong> Para cada posição, escolhemos um caractere ainda não utilizado.</p>
+                    <ul>
+                        <li class="fragment"><strong>Escolha:</strong> Fixe um caractere na posição atual.</li>
+                        <li class="fragment"><strong>Explore:</strong> Preencha as posições restantes recursivamente.</li>
+                        <li class="fragment"><strong>Desfaça:</strong> Libere o caractere e tente o próximo.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Visualizando para "abc"</h3>
+                    <pre><code data-trim data-noescape class="language-text">
+                       ""
+                   /    |    \
+                 "a"   "b"   "c"
+                / \   / \    / \
+             "ab" "ac" "ba" "bc" "ca" "cb"
+              |    |    |    |    |    |
+            "abc""acb""bac""bca""cab""cba"
+                    </code></pre>
+                    <p class="fragment">Cada nível da árvore fixa um caractere. Backtracking garante que exploramos todas as combinações.</p>
+                </section>
+
+                <section>
+                    <h3>Implementação</h3>
+                    <p><strong>Plateia:</strong> Pensem nos parâmetros da função recursiva:</p>
+                    <ul>
+                        <li class="fragment">A string original (ou array de chars)</li>
+                        <li class="fragment">Um array de <code>boolean</code> para marcar caracteres usados</li>
+                        <li class="fragment">A permutação sendo construída (string ou array)</li>
+                        <li class="fragment">Array de resultados</li>
+                    </ul>
+                    <div class="fragment driver-action">
+                        🛠️ DRIVER 4: Última rodada! Implemente as permutações com backtracking!
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Análise Final</h3>
+                    <ul>
+                        <li><strong>Tempo:</strong> O(n! * n) - n! permutações, cada uma com custo n para copiar.</li>
+                        <li><strong>Espaço:</strong> O(n) - profundidade da recursão + array de usados.</li>
+                    </ul>
+                    <p class="fragment highlight-text">n! cresce explosivamente: com 10 caracteres já são 3.628.800 permutações!</p>
+                </section>
+            </section>
+
+            <!-- Resumo -->
+            <section>
+                <section>
+                    <h2>Resumo da Aula</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Conceito</th>
+                                    <th>Quando Usar</th>
+                                    <th>Complexidade Típica</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="highlight-text">Recursão Simples</td>
+                                    <td>Subproblemas idênticos ao original</td>
+                                    <td>O(n) a O(2^n)</td>
+                                </tr>
+                                <tr>
+                                    <td class="highlight-text">Two Pointers</td>
+                                    <td>Comparações simétricas em strings/arrays</td>
+                                    <td>O(n)</td>
+                                </tr>
+                                <tr>
+                                    <td class="highlight-text">Backtracking</td>
+                                    <td>Gerar combinações, permutações, resolver puzzles</td>
+                                    <td>O(n!) ou O(2^n)</td>
+                                </tr>
+                                <tr>
+                                    <td class="highlight-text">Poda (Pruning)</td>
+                                    <td>Eliminar ramos inválidos cedo</td>
+                                    <td>Reduz constante, mesma classe</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="center-text">
+                    <h2>Fim do Dojo #03!</h2>
+                    <p>Vocês agora entendem como o computador <strong>explora possibilidades</strong> de forma sistemática.</p>
+                    <p>Recursão e Backtracking são a base de motores de xadrez, resolvedores de Sudoku, compiladores e muito mais!</p>
+                </section>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            controls: true,
+            progress: true,
+            center: true,
+            margin: 0.15,
+            width: 1024,
+            height: 768,
+            transition: 'slide',
+            plugins: [ RevealHighlight ]
+        });
+    </script>
+</body>
+</html>
