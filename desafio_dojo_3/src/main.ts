@@ -15,9 +15,19 @@
  * - Retorne `true` se a string for um palíndromo.
  */
 function isPalindromeIterative(s: string): boolean {
-  // TODO: limpe a string (remova espaços, coloque em lowercase)
-  // TODO: use dois ponteiros caminhando ao centro
-  return false;
+  s = s.toLowerCase().replace(/\s/g, "");
+  console.log(s);
+  let left = 0;
+  let right = s.length - 1;
+  while (left <= right) {
+    if (s[left] == s[right]) {
+      left++
+      right--
+    } else {
+      return false
+    }
+  }
+  return true;
 }
 
 /**
@@ -29,7 +39,18 @@ function isPalindromeIterative(s: string): boolean {
  */
 function isPalindromeRecursive(s: string): boolean {
   // TODO: limpe a string e chame uma função auxiliar recursiva
-  return false;
+  let left = 0;
+  let right = s.length - 1;
+
+  if (left > right) {
+    return true;
+  }
+
+  if (s[left] == s[right]) {
+    return isPalindromeRecursive(s.slice(left + 1, right));
+  } else {
+    return false;
+  }
 }
 
 // ────────────────────────────────────────────────────────────
@@ -50,11 +71,30 @@ function isPalindromeRecursive(s: string): boolean {
 function generateParentheses(n: number): string[] {
   const results: string[] = [];
 
+  function backtrack(s: string, open: number, close: number) {
+    if (s.length == n * 2) {
+      results.push(s);
+      return;
+    }
+
+    if (open < n) {
+      backtrack(s + "(", open + 1, close);
+    }
+
+    if (close < open) {
+      backtrack(s + ")", open, close + 1);
+    }
+  }
+
+  backtrack("", 0, 0);
+
   // TODO: crie uma função auxiliar recursiva (backtrack)
   // que receba: string atual, contagem de aberturas, contagem de fechamentos
 
   return results;
 }
+
+//function 
 
 // ────────────────────────────────────────────────────────────
 //  Round 3 — Permutações de String
@@ -109,7 +149,8 @@ function runTests(): void {
 
   console.log("\nRecursivo:");
   for (const [input, expected] of palindromeTests) {
-    const result = isPalindromeRecursive(input);
+    const s = input.toLowerCase().replace(/\s/g, "");
+    const result = isPalindromeRecursive(s);
     const status = result === expected ? "PASSOU" : "FALHOU";
     console.log(`  isPalindrome("${input}") = ${result} ${status === "PASSOU" ? "✅" : "❌"}`);
   }
